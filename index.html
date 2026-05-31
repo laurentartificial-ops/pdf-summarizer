@@ -163,15 +163,19 @@ async function summarize() {
     const text = await extractText(currentFile);
     if (!text || text.length < 50) throw new Error('Cannot read this PDF. It might be a scanned image.');
 
-    const prompt = `You are a friendly teacher helping a high school student who speaks English at B1 level.
-Read this PDF text and write a summary using SIMPLE English words. Keep the same meaning. Do not use hard words. Use short sentences.
+    const prompt = `You are a smart analyst and teacher. Read this PDF and write a summary that is:
+- Easy to understand (B1 English level) but KEEP all important numbers, percentages, data, names, and technical terms
+- Do NOT simplify numbers — always include exact figures (e.g. "up 43%", "$2.1M revenue", "RSI at 62")
+- Do NOT replace technical words with vague words (e.g. keep "on-chain metrics", "market cap", "RSI", "liquidity")
+- Each key point must include specific data or facts from the PDF, not vague statements
+- Full explanation must be detailed, at least 8-10 sentences, with numbers and specific facts included
 
 Return ONLY a valid JSON object, nothing else, no markdown:
 {
-  "keyPoints": ["point 1", "point 2", "point 3", "point 4", "point 5"],
-  "fullExplanation": "Clear and simple explanation. Short sentences. At least 5-8 sentences.",
-  "whatToDo": ["action 1", "action 2", "action 3"],
-  "conclusion": "Short and simple conclusion."
+  "keyPoints": ["specific point with numbers/data 1", "specific point with numbers/data 2", "specific point with numbers/data 3", "specific point with numbers/data 4", "specific point with numbers/data 5"],
+  "fullExplanation": "Detailed explanation with exact numbers, names, and technical terms kept. At least 8-10 sentences.",
+  "whatToDo": ["specific action 1", "specific action 2", "specific action 3"],
+  "conclusion": "Concise conclusion with key figures and facts."
 }
 
 PDF content:
